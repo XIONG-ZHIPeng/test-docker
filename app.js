@@ -1,10 +1,10 @@
 let Koa = require('koa');
 let app = new Koa();
 
-// const redis = require('redis');
-// let rds = redis.createClient({url: "redis://redis:6379"});
-// rds.on('connect', ()=> console.log('redis connect ok'))
-// rds.connect();
+const redis = require('redis');
+let rds = redis.createClient({url: "redis://redis:6379"});
+rds.on('connect', ()=> console.log('redis connect ok'))
+rds.connect();
 
 
 let log4js = require('log4js');
@@ -24,14 +24,14 @@ router.all('/', async ctx =>{
 router.all('/hello/:name', async ctx =>{
 	let name = ctx.params.name
     logger.info('on hello page')
-	ctx.body = `hello ${name ? name : 'world'}`
+	ctx.body = `hello 2222 ${name ? name : 'world'}`
 });
 
-// router.all('/redis', async ctx =>{
-// 	let count = await rds.incr("count")
-// 	logger.info(`on test redis page, count ${count}`)
-// 	ctx.body = `on test redis page, 44 count ${count} `
-// });
+router.all('/redis', async ctx =>{
+	let count = await rds.incr("count")
+	logger.info(`on test redis page, count ${count}`)
+	ctx.body = `on test redis page, 44 count ${count} `
+});
 
 app.use(router.routes());
 
